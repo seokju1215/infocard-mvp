@@ -9,7 +9,7 @@ function Interpage(){
     const user = userData[username]; // 사용자 정보 불러오기
     const navigate = useNavigate();
     const handleGenderSelect = async (gender) => {
-        const clientId = await getClientId();
+        let clientId = await getClientId();
         if (clientId.includes("-남성") || clientId.includes("-여성")) {
             console.log("성별이 이미 포함되어 있어 추가하지 않습니다:", clientId);
           } else {

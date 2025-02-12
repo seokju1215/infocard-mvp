@@ -1,15 +1,37 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import userData from "./userData";
-import './InfoCard.css';
+import { getClientId } from "./ClientId/clientManager";
+import logToFirebase from "./logToFirebase.js";
+import "./InfoCard.css";
 import Accordion from "./Accordion";
 
+
+console.log("📢 logToFirebase:", logToFirebase); // ✅ logToFirebase가 undefined인지 확인
+
 function InfoCard() {
-    const { username } = useParams(); // URL에서 사용자 이름 가져오기
-    const user = userData[username]; // 사용자 정보 불러오기
+    const { username } = useParams();
+    const user = userData[username];
+
+    useEffect(() => {
+        const fetchClientId = async () => {
+            let clientId = await getClientId(); 
+            logToFirebase(clientId, "페이지 방문", `Info 페이지 (${username})`);
+        };
+        fetchClientId();
+
+        // 페이지 나가기 이벤트 추가
+        const handleUnload = async () => {
+            const clientId = localStorage.getItem("clientId"); // 이미 저장된 값 가져오기
+            logToFirebase(clientId, "페이지 나가기", `Info 페이지 (${username})`);
+        };
+
+        window.addEventListener("beforeunload", handleUnload);
+        return () => window.removeEventListener("beforeunload", handleUnload);
+    }, [username]);
 
     if (!user) {
-        return < h1>해당 사용자의 정보를 찾을 수 없습니다.</h1>;
+        return <h1>해당 사용자의 정보를 찾을 수 없습니다.</h1>;
     }
 
     return (

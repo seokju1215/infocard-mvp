@@ -1,11 +1,20 @@
 import React, { useState } from "react";
 import "./Accordion.css";
+import { getClientId } from "./ClientId/clientManager";
+import logToFirebase from "./logToFirebase.js";
 
 const Accordion = ({ title, content }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const handleClick = async () => {
+    const clientId = await getClientId();
+    const action = isOpen ? "Accordion 닫기" : "Accordion 열기";
+    logToFirebase(clientId, action, title);
+    setIsOpen(!isOpen);
+  };
+
 
   return (
-    <div className="accordion">
+    <div className="accordion" onClick={handleClick}>
       <div className={`accordion-header ${isOpen ? "open" : ""}`}  onClick={() => setIsOpen(!isOpen)}>
         <span className={`icon ${isOpen ? "rotated" : ""}`}>&#9654;</span>
         <span className="title">{title}</span>
