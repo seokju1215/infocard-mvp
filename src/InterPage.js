@@ -29,12 +29,13 @@ function Interpage(){
     return (
         <div className="container">
             <h3>{user.name} 님의 <br/> 정보 / TMI</h3>
-            <p>잠시, 본인의 성별을 알려주세요</p>
+            <h4>잠시, 본인의 성별을 알려주세요</h4>
+            <p>성별을 알려주셔야 홍석주님의 정보를 볼 수 있어요.</p>
             <div className = "button-section">
                 <div className = "box-button" onClick={()=>{handleGenderSelect("남성");}}>남성</div>
                 <div className = "box-button" onClick={()=>{handleGenderSelect("여성")}}>여성</div>
             </div>
-            <p>성별을 알려주셔야 {user.name}님의 정보를 볼 수 있어요.<br/> 선택된 정보는 {user.name}님이 볼 수 없어요.<br/> </p>
+            <p>선택된 정보는 익명으로 유지되며 {user.name}님이 볼 수 없어요.<br/> </p>
         </div>
     );
 }

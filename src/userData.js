@@ -1,7 +1,6 @@
 const userData = {
   "홍석주": {
     name: "홍석주",
-    title: "홍석주 님의 정보 / TMI",
     info: {
       "생년월일": "2004.12.15",
       "MBTI": "INFP",
@@ -21,7 +20,7 @@ const userData = {
       "TMI": "tmitmitmi",
       "전화번호": "010-xxxx-xxxx",
       "실시간 위치": "예?",
-      "갤러리": "이건 또 뭔데",
+      "사진 모음": "이건 또 뭔데",
     }
   },
 

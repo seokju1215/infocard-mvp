@@ -8,7 +8,7 @@ function App() {
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<p>홈인데요. 여긴 아무것도 없어요.<br /> 3일에 페이지 하나씩 만들라는 기획자가 있다...? <br/> by 홍석주</p>} />
+          <Route path="/" element={<p>홈인데요. 여긴 아무것도 없어요.<br /> 예??? 3일에 페이지 하나씩 만들라는 기획자가 있다? <br/> 🥕🥕🥕🥕 by 홍석주</p>} />
           <Route path="/:username/inter" element={<InterPage />} />
           <Route path="/:username/info" element={<InfoCard />} />
         </Routes>
