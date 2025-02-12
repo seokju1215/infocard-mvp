@@ -1,0 +1,32 @@
+.container{
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    gap : 30px;
+    align-items: center;
+
+}
+
+.container h3{
+    font-size: 30px;
+    margin-top: 15vh; 
+}
+
+.button-section{
+    
+    display: flex;
+    flex-direction: row;
+    gap : 20px;
+}
+
+.box-button{
+    width : 120px;
+    height : 120px;
+    background-color: #222;
+    border-radius: 10px;
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    color: aliceblue;
+    font-weight: 800;
+}

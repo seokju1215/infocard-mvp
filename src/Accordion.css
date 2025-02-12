@@ -1,0 +1,44 @@
+.accordion {
+    width: 100%;
+    max-width: 300px; 
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #f6f3f3;
+    border: #222;
+    color: #222;
+    font-size: 18px;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .accordion-header {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  .accordion-header.open {
+    border-bottom: 2px solid white;
+  }
+  
+  .icon {
+    transition: transform 0.3s ease-in-out;
+    margin-right: 10px;
+  }
+  
+  .rotated {
+    transform: rotate(90deg); /* 클릭 시 90도 회전 */
+  }
+  
+  .accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    background-color: #f6f3f3;
+    padding: 0 15px;
+    transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out;
+  }
+  
+  .accordion-content.open {
+    max-height: 80px;
+    padding: 15px;
+  }
