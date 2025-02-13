@@ -10,7 +10,9 @@ const Accordion = ({ title, content }) => {
   const handleClick = async () => {
     const clientId = await getClientId();
     const action = isOpen ? "Accordion 닫기" : "Accordion 열기";
+    alert(clientId + action + title + username);
     logToFirebase(clientId, action, title, username);
+    alert("logToFirebase 실행")
     setIsOpen(!isOpen);
   };
 
