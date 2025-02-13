@@ -20,6 +20,7 @@ async function logToFirebase(clientId, action, details, username) {
     const userDocRef = doc(db, "userRequests", clientId);
     
     let totalLogs = 0;
+    let logEntry = {}; // 🔹 logEntry 변수를 상위에서 선언
 
     alert("🔄 Firestore에서 `userRequests` 문서 가져오기 시작...");
     console.log("🔄 Firestore에서 `userRequests` 문서 가져오기 시작...");
@@ -45,7 +46,7 @@ async function logToFirebase(clientId, action, details, username) {
             alert(`✅ Firestore 업데이트 완료! 새로운 총 요청 횟수: ${totalLogs + 1}`);
             console.log(`✅ Firestore 업데이트 완료 (${clientId}) → 새로운 총 요청 횟수: ${totalLogs + 1}`);
 
-            const logEntry = {
+            logEntry = { // 🔹 logEntry 값을 할당
                 clientId,
                 visitTime: new Date().toISOString(),
                 action,
