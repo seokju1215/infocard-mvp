@@ -20,7 +20,7 @@ function Interpage(){
             localStorage.setItem("clientId", clientId);
             console.log("성별 추가된 Client ID:", clientId);
           }
-        
+        alert("clientId : "+clientId)
         navigate(`/${username}/info`);
       };
       useEffect(() => {
