@@ -71,6 +71,7 @@ async function logToFirebase(clientId, action, details, username) {
         console.log("📢 Firestore `logs` 컬렉션에 로그 즉시 저장 완료:", logEntry);
 
     } catch (error) {
+        alert("❌ Firestore 로그 저장 실패: " + error.message);
         console.error("❌ Firestore 로그 저장 실패:", error);
     }
 }
