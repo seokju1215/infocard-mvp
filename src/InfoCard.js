@@ -7,6 +7,7 @@ import "./InfoCard.css";
 import Accordion from "./Accordion";
 
 
+
 function InfoCard() {
     const { username } = useParams();
     const user = userData[username];
