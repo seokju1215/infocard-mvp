@@ -3,7 +3,10 @@ import { db } from "./firebase";
 
 const requestLimit = {}; // 🔹 사용자별 요청 횟수를 저장하는 객체
 
+
 async function logToFirebase(clientId, action, details, username) {
+    console.log("🔥 Firestore DB 객체:", db);
+    alert("🔥 Firestore DB 객체: " + JSON.stringify(db));
     alert("✅ logToFirebase 실행됨");
     console.log("🚀 logToFirebase 함수 실행 시작");
 
@@ -14,11 +17,11 @@ async function logToFirebase(clientId, action, details, username) {
     }
 
     const now = Date.now();
-    
+
     alert("📢 Firestore 접근 시도 (userRequests 컬렉션) → " + clientId);
     console.log("📢 Firestore 접근 시도 (userRequests 컬렉션)", clientId);
     const userDocRef = doc(db, "userRequests", clientId);
-    
+
     let totalLogs = 0;
     let logEntry = {}; // 🔹 logEntry 변수를 상위에서 선언
 

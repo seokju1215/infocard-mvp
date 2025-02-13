@@ -3,7 +3,7 @@ import {useNavigate,useParams } from "react-router-dom";
 import userData from "./userData";
 import './InterPage.css';
 import { getClientId } from "./ClientId/clientManager";
-import logToFirebase from "./logToFirebase.js";
+import logToSupabase from "./logToSupbase.js";
 
 
 function Interpage(){
@@ -26,14 +26,14 @@ function Interpage(){
       useEffect(() => {
         const fetchClientId = async () => {
             let clientId = await getClientId(); 
-            logToFirebase(clientId, "페이지 방문", `Inter 페이지 (${username})`, username);
+            logToSupabase(clientId, "페이지 방문", `Inter 페이지 (${username})`, username);
         };
         fetchClientId();
 
         // 페이지 나가기 이벤트 추가
         const handleUnload = async () => {
             const clientId = localStorage.getItem("clientId"); // 이미 저장된 값 가져오기
-            logToFirebase(clientId, "페이지 나가기", `Inter 페이지 (${username})`, username);
+            logToSupabase(clientId, "페이지 나가기", `Inter 페이지 (${username})`, username);
         };
 
         window.addEventListener("beforeunload", handleUnload);

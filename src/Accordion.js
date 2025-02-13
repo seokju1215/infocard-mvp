@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Accordion.css";
 import { getClientId } from "./ClientId/clientManager";
-import logToFirebase from "./logToFirebase.js";
+import logToSupabase from "./logToSupbase.js";
 import { useParams } from "react-router-dom";
 
 const Accordion = ({ title, content }) => {
@@ -11,8 +11,8 @@ const Accordion = ({ title, content }) => {
     const clientId = await getClientId();
     const action = isOpen ? "Accordion 닫기" : "Accordion 열기";
     alert(clientId + action + title + username);
-    logToFirebase(clientId, action, title, username);
-    alert("logToFirebase 실행")
+    logToSupabase(clientId, action, title, username);
+    alert("logToSupabase실행")
     setIsOpen(!isOpen);
   };
 
