@@ -9,7 +9,6 @@ async function logToFirebase(clientId, action, details, username) {
         console.warn("🚨 clientId가 없습니다. Firestore에 로그를 저장하지 않습니다.");
         return;
     }
-    alert("logToFirebase 실행");
     const now = Date.now();
     
     // 🔹 Firestore에서 해당 사용자의 요청 횟수 가져오기 (`userRequests` 컬렉션 사용)
@@ -68,6 +67,7 @@ async function logToFirebase(clientId, action, details, username) {
         };
 
         await addDoc(collection(db, "logs"), logEntry);
+        alert("firestore에 저장했어 clientId는? :" + clientId)
         console.log("📢 Firestore `logs` 컬렉션에 로그 즉시 저장 완료:", logEntry);
 
     } catch (error) {
