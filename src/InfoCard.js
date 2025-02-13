@@ -7,8 +7,6 @@ import "./InfoCard.css";
 import Accordion from "./Accordion";
 
 
-console.log("📢 logToFirebase:", logToFirebase); // ✅ logToFirebase가 undefined인지 확인
-
 function InfoCard() {
     const { username } = useParams();
     const user = userData[username];
@@ -16,14 +14,14 @@ function InfoCard() {
     useEffect(() => {
         const fetchClientId = async () => {
             let clientId = await getClientId(); 
-            logToFirebase(clientId, "페이지 방문", `Info 페이지 (${username})`);
+            logToFirebase(clientId, "페이지 방문", `Info 페이지 (${username})`, username);
         };
         fetchClientId();
 
         // 페이지 나가기 이벤트 추가
         const handleUnload = async () => {
             const clientId = localStorage.getItem("clientId"); // 이미 저장된 값 가져오기
-            logToFirebase(clientId, "페이지 나가기", `Info 페이지 (${username})`);
+            logToFirebase(clientId, "페이지 나가기", `Info 페이지 (${username})`, username);
         };
 
         window.addEventListener("beforeunload", handleUnload);
