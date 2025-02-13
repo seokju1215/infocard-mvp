@@ -5,6 +5,7 @@ const requestLimit = {}; // 🔹 사용자별 요청 횟수를 저장하는 객�
 
 // ✅ Firestore에서 `userRequests`를 체크하고, `logs` 컬렉션에 저장
 async function logToFirebase(clientId, action, details, username) {
+    alert("logToFirebase 실행됨")
     if (!clientId) {
         alert("🚨 clientId가 없습니다. Firestore에 로그를 저장하지 않습니다.");
         console.warn("🚨 clientId가 없습니다. Firestore에 로그를 저장하지 않습니다.");
