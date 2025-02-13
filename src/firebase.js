@@ -22,6 +22,4 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const db = getFirestore(app);
 
-alert("🔥 Firebase 초기화 완료");
-
 export {db};
