@@ -13,14 +13,11 @@ function Interpage(){
     const handleGenderSelect = async (gender) => {
         let clientId = await getClientId();
         if (clientId.includes("-남성") || clientId.includes("-여성")) {
-            console.log("성별이 이미 포함되어 있어 추가하지 않습니다:", clientId);
           } else {
             // 성별이 없을 때만 추가
             clientId = `${clientId}-${gender}`;
             localStorage.setItem("clientId", clientId);
-            console.log("성별 추가된 Client ID:", clientId);
           }
-        alert("clientId : "+clientId)
         navigate(`/${username}/info`);
       };
       useEffect(() => {
