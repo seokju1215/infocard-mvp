@@ -14,7 +14,7 @@ function InfoCard() {
 
     useEffect(() => {
         const fetchClientId = async () => {
-            let clientId = await getClientId(); 
+            let clientId = await getClientId();
             logToSupabase(clientId, "페이지 방문", `Info 페이지 (${username})`, username);
         };
         fetchClientId();
@@ -42,14 +42,14 @@ function InfoCard() {
             };
 
             const blob = new Blob([JSON.stringify(logEntry)], { type: "application/json" });
-            navigator.sendBeacon(`${SUPABASE_URL}/rest/v1/logs`, blob);
+            navigator.sendBeacon(`${SUPABASE_URL}/rest/v1/logs?apikey=${SUPABASE_API_KEY}`, blob);
         };
         const handleVisibilityChange = () => {
             if (document.visibilityState === "hidden") {
                 handleUnload();
             }
         };
-    
+
 
         window.addEventListener("beforeunload", handleUnload);
         document.addEventListener("visibilitychange", handleVisibilityChange);
