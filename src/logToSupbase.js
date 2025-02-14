@@ -6,53 +6,57 @@ async function logToSupabase(clientId, action, details, username) {
         return;
     }
 
-    let totalLogs = 0;
-
-    // 🔄 `userRequests` 테이블에서 해당 사용자의 요청 횟수 조회
-    const { data, error } = await supabase
-        .from("userRequests")
-        .select("totalCount")
-        .eq("clientId", clientId)
-        .single();
-
-    if (error && error.code !== "PGRST116") { // 데이터가 없을 경우를 대비
-        console.error("❌ Supabase에서 데이터 가져오기 실패:", error);
-        return;
+    // ✅ 1️⃣ Local Storage에서 캐시된 요청 횟수 확인
+    let cachedTotalLogs = localStorage.getItem(`logCount_${clientId}`);
+    
+    if (cachedTotalLogs !== null) {
+        cachedTotalLogs = parseInt(cachedTotalLogs, 10);
     }
 
-    if (data) {
-        totalLogs = data.totalCount || 0;
+    let totalLogs = cachedTotalLogs || 0;
+
+    // ✅ 2️⃣ Local Storage에 값이 없으면 Supabase에서 조회 후 저장
+    if (cachedTotalLogs === null) {
+        const { data, error } = await supabase
+            .from("userRequests")
+            .select("totalCount")
+            .eq("clientId", clientId)
+            .single();
+
+        if (error && error.code !== "PGRST116") {
+            console.error("❌ Supabase에서 데이터 가져오기 실패:", error);
+            return;
+        }
+
+        if (data) {
+            totalLogs = data.totalCount || 0;
+            localStorage.setItem(`logCount_${clientId}`, totalLogs);
+        }
     }
-    console.log(totalLogs)
-    // 🔥 요청 횟수 제한 검사 (100 이상이면 중단)
+
+    console.log(`🔹 현재 로그 횟수: ${totalLogs}`);
+
+    // ✅ 3️⃣ 100번 초과하면 DB 접근 없이 차단
     if (totalLogs >= 100) {
-        console.warn(`🚫 요청 제한 초과: clientId ${clientId}` + totalLogs);
+        console.warn(`🚫 요청 제한 초과: clientId ${clientId}`);
         return;
     }
 
-    // 🔥 요청 횟수 업데이트
-    if (totalLogs > 0) {
-        const { error: updateError } = await supabase
-            .from("userRequests")
-            .update({ totalCount: totalLogs + 1 })
-            .eq("clientId", clientId);
+    // ✅ 4️⃣ 요청 횟수 증가
+    totalLogs += 1;
+    localStorage.setItem(`logCount_${clientId}`, totalLogs);
 
-        if (updateError) {
-            console.error("❌ Supabase `totalCount` 업데이트 실패:", updateError);
-            return;
-        }
-    } else {
-        const { error: insertError } = await supabase
-            .from("userRequests")
-            .insert([{ clientId, totalCount: 1 }]);
+    // ✅ 5️⃣ Supabase 데이터 업데이트
+    const { error: dbError } = await supabase
+        .from("userRequests")
+        .upsert([{ clientId, totalCount: totalLogs }], { onConflict: ['clientId'] });
 
-        if (insertError) {
-            console.error("❌ Supabase 새 문서 생성 실패:", insertError);
-            return;
-        }
+    if (dbError) {
+        console.error("❌ Supabase `totalCount` 업데이트 실패:", dbError);
+        return;
     }
 
-    // 🔹 `logs` 테이블에 데이터 추가
+    // ✅ 6️⃣ 로그 기록
     const logEntry = {
         clientId,
         visitTime: new Date().toISOString(),
