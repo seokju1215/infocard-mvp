@@ -42,7 +42,8 @@ function InfoCard() {
             };
 
             const blob = new Blob([JSON.stringify(logEntry)], { type: "application/json" });
-            navigator.sendBeacon(`${SUPABASE_URL}/rest/v1/logs?apikey=${SUPABASE_API_KEY}`, blob);
+            const endpoint = `${SUPABASE_URL}/rest/v1/logs?apikey=${SUPABASE_API_KEY}`;
+            navigator.sendBeacon(endpoint, blob);
         };
         const handleVisibilityChange = () => {
             if (document.visibilityState === "hidden") {
