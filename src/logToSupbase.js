@@ -1,20 +1,14 @@
 import { supabase } from "./supabase";
 
-const requestLimit = {}; // 🔹 사용자별 요청 횟수를 저장하는 객체
-
 async function logToSupabase(clientId, action, details, username) {
-
     if (!clientId) {
         console.warn("clientId 없음! Supabase에 저장 불가");
         return;
     }
 
-    const now = Date.now();
-
     let totalLogs = 0;
 
-    // 🔄 `userRequests` 테이블에서 해당 사용자의 요청 횟수 조회 (Firestore의 `getDoc` 대체)
-
+    // 🔄 `userRequests` 테이블에서 해당 사용자의 요청 횟수 조회
     const { data, error } = await supabase
         .from("userRequests")
         .select("totalCount")
@@ -29,10 +23,14 @@ async function logToSupabase(clientId, action, details, username) {
     if (data) {
         totalLogs = data.totalCount || 0;
     }
+    console.log(totalLogs)
+    // 🔥 요청 횟수 제한 검사 (100 이상이면 중단)
+    if (totalLogs >= 100) {
+        console.warn(`🚫 요청 제한 초과: clientId ${clientId}` + totalLogs);
+        return;
+    }
 
-
-    // 🔥 요청 횟수 업데이트 (Firestore의 `updateDoc`, `setDoc` 대체)
-
+    // 🔥 요청 횟수 업데이트
     if (totalLogs > 0) {
         const { error: updateError } = await supabase
             .from("userRequests")
@@ -54,7 +52,7 @@ async function logToSupabase(clientId, action, details, username) {
         }
     }
 
-    // 🔹 `logs` 테이블에 데이터 추가 (Firestore `addDoc` 대체)
+    // 🔹 `logs` 테이블에 데이터 추가
     const logEntry = {
         clientId,
         visitTime: new Date().toISOString(),
@@ -62,7 +60,6 @@ async function logToSupabase(clientId, action, details, username) {
         details,
         username
     };
-
 
     const { error: logError } = await supabase.from("logs").insert([logEntry]);
 
