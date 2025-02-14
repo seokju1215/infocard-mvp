@@ -42,8 +42,12 @@ function InfoCard() {
             };
 
             const blob = new Blob([JSON.stringify(logEntry)], { type: "application/json" });
-            const endpoint = `${SUPABASE_URL}/rest/v1/logs?apikey=${SUPABASE_API_KEY}`;
-            navigator.sendBeacon(endpoint, blob);
+            fetch(`${SUPABASE_URL}/rest/v1/logs?apikey=${SUPABASE_API_KEY}`, {
+                method: "POST",
+                body: blob,
+                headers: { "Content-Type": "application/json" },
+                keepalive: true  // 페이지가 닫혀도 요청 유지
+            });
         };
         const handleVisibilityChange = () => {
             if (document.visibilityState === "hidden") {
