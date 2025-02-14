@@ -44,9 +44,20 @@ function InfoCard() {
             const blob = new Blob([JSON.stringify(logEntry)], { type: "application/json" });
             navigator.sendBeacon(`${SUPABASE_URL}/rest/v1/logs`, blob, headers);
         };
+        const handleVisibilityChange = () => {
+            if (document.visibilityState === "hidden") {
+                handleUnload();
+            }
+        };
+    
 
         window.addEventListener("beforeunload", handleUnload);
-        return () => window.removeEventListener("beforeunload", handleUnload);
+        document.addEventListener("visibilitychange", handleVisibilityChange);
+
+        return () => {
+            window.removeEventListener("beforeunload", handleUnload);
+            document.removeEventListener("visibilitychange", handleVisibilityChange);
+        };
     }, [username]);
 
     if (!user) {
