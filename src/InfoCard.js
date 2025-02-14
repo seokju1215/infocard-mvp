@@ -20,9 +20,29 @@ function InfoCard() {
         fetchClientId();
 
         // 페이지 나가기 이벤트 추가
-        const handleUnload = async () => {
-            const clientId = localStorage.getItem("clientId"); // 이미 저장된 값 가져오기
-            logToSupabase(clientId, "페이지 나가기", `Info 페이지 (${username})`, username);
+        const handleUnload = () => {
+            const clientId = localStorage.getItem("clientId");
+            if (!clientId) return;
+
+            const logEntry = {
+                clientId,
+                visitTime: new Date().toISOString(),
+                action: "페이지 나가기",
+                details: `Info 페이지 (${username})`,
+                username
+            };
+
+            const SUPABASE_URL = "https://lpyhiwqtathursomrtbw.supabase.co";
+            const SUPABASE_API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxweWhpd3F0YXRodXJzb21ydGJ3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk0MzE1NjcsImV4cCI6MjA1NTAwNzU2N30.8mVa2_pRK17ZUIvgfcFKQR1IikWQtZGqx46TTS-r27A";
+
+            const headers = {
+                "Content-Type": "application/json",
+                "apikey": SUPABASE_API_KEY,
+                "Authorization": `Bearer ${SUPABASE_API_KEY}`
+            };
+
+            const blob = new Blob([JSON.stringify(logEntry)], { type: "application/json" });
+            navigator.sendBeacon(`${SUPABASE_URL}/rest/v1/logs`, blob, headers);
         };
 
         window.addEventListener("beforeunload", handleUnload);
