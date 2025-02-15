@@ -71,7 +71,6 @@ function InfoCard() {
 
     return (
         <div className="info-container">
-            <div className="image" />
             <h2>{user.name}'s<br />Information</h2>
             {Object.entries(user.info).map(([key, value]) => (
                 <Accordion key={key} title={key} content={value} />
