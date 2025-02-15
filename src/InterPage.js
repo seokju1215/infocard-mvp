@@ -46,7 +46,7 @@ function Interpage(){
         <div className="container">
             <h3>{user.name} 님의 <br/> 정보 / TMI</h3>
             <h4>잠시, 본인의 성별을 알려주세요</h4>
-            <p>성별을 알려주셔야 홍석주님의 정보를 볼 수 있어요.</p>
+            <p>성별을 알려주셔야 {user.name}님의 정보를 볼 수 있어요.</p>
             <div className = "button-section">
                 <div className = "box-button" onClick={()=>{handleGenderSelect("남성");}}>남성</div>
                 <div className = "box-button" onClick={()=>{handleGenderSelect("여성")}}>여성</div>
