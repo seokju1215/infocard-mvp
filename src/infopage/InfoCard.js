@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import userData from "./userData";
-import { getClientId } from "./ClientId/clientManager";
-import logToSupabase from "./logToSupbase.js";
+import userData from "../user/userData";
+import { getClientId } from "../ClientId/clientManager";
+import logToSupabase from "../api/logToSupbase.js";
 import "./InfoCard.css";
-import Accordion from "./Accordion";
+import Accordion from "../components/accordion/Accordion";
 
 
 

@@ -1,9 +1,9 @@
 import React, {useEffect} from "react";
 import {useNavigate,useParams } from "react-router-dom";
-import userData from "./userData";
+import userData from "../user/userData";
 import './InterPage.css';
-import { getClientId } from "./ClientId/clientManager";
-import logToSupabase from "./logToSupbase.js";
+import { getClientId } from "../ClientId/clientManager";
+import logToSupabase from "../api/logToSupbase.js";
 
 
 function Interpage(){

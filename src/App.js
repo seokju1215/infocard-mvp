@@ -1,6 +1,6 @@
-import logo from './logo.svg';
-import InterPage from './InterPage.js';
-import InfoCard from './InfoCard.js';
+
+import InterPage from './interpage/InterPage.js';
+import InfoCard from './infopage/InfoCard.js';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {

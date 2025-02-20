@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Accordion.css";
-import { getClientId } from "./ClientId/clientManager";
-import logToSupabase from "./logToSupbase.js";
+import { getClientId } from "../../ClientId/clientManager";
+import logToSupabase from "../../api/logToSupbase.js";
 import { useParams } from "react-router-dom";
 
 const Accordion = ({ title, content }) => {
